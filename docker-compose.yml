@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: app
+    build: ./app
+    environment:
+      DB_URL: postgresql://postgres:password@db:5432/local
+    ports:
+      - 3000:3000
+    networks:
+      - coding_task
+  db:
+    container_name: db
+    build: ./db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: local
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
+    networks:
+      - coding_task
+
+networks:
+  formelife:
+    name: coding_task
+    driver: bridge
